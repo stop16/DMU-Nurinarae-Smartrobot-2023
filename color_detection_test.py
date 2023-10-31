@@ -5,20 +5,20 @@ import time
 cap = cv2.VideoCapture(0)
 
 def get_picture():
-    time.sleep(2)
+    time.sleep(0.5)
     _, frame = cap.read()
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     return hsv_frame
 
 def color_detection_and_contours(img):
     #색 범위 설정(HSV)
-    low_red = np.array([157,  144, 101])
+    low_red = np.array([157,  144, 71])
     high_red = np.array([197,  255, 255])
-    low_green = np.array([56, 189, 61])
+    low_green = np.array([56, 189, 31])
     high_green = np.array([96, 255, 255])
-    low_blue = np.array([88, 160, 111])
+    low_blue = np.array([88, 160, 81])
     high_blue = np.array([128, 255, 255])
-    low_yellow = np.array([4, 136, 133])
+    low_yellow = np.array([4, 136, 103])
     high_yellow = np.array([44, 255, 255])
 
     #mask creation
@@ -75,7 +75,7 @@ def color_detection_and_contours(img):
     
     return red_xywh, green_xywh, blue_xywh, yellow_xywh
 
-def get_num_of_value(val):
+def get_num(val):
     cnt = 0
     for i in range(len(val)):
         if val[i]:
@@ -85,13 +85,13 @@ def get_num_of_value(val):
 def decision(val):
     first_object = []
     second_object = []
-    if get_num_of_value(val) == 0:
+    if get_num(val) == 0:
         pass
-    elif get_num_of_value(val) == 1:
+    elif get_num(val) == 1:
         for i in range(len(val)):
             break
         return val[i][4]
-    elif get_num_of_value(val) == 2:
+    elif get_num(val) == 2:
         for i in range(len(val)):
             val[i] = first_object
         for i in range(i+1,len(val)):
@@ -100,3 +100,10 @@ def decision(val):
             return first_object,second_object
         elif first_object[3] < second_object[3]:
             return second_object,first_object
+
+"""
+img = get_picture()
+val = color_detection_and_contours(img)
+print(val)
+print(decision(val))
+"""
