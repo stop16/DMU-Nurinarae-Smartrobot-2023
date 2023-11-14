@@ -119,7 +119,7 @@ print(val)
 print(decision(val))
 """
 
-def test_sibal():
+def test_cam():
     img = get_picture()
     val = color_detection_and_contours(img)
     print(val)
@@ -132,4 +132,4 @@ def test_sibal():
     val = color_detection_and_contours(img)
     print(val)
 
-test_sibal()
+test_cam()
